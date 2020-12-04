@@ -45,14 +45,20 @@ type PodSetReconciler struct {
 // +kubebuilder:rbac:groups=app.example.com,resources=podsets/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=v1,resources=pods,verbs=get;list;watch;create;update;patch;delete
 
+// GetPodSetInstance TODO
+func (r *PodSetReconciler) GetPodSetInstance(req ctrl.Request) (*appv1alpha1.PodSet, error) {
+	instance := &appv1alpha1.PodSet{}
+	err := r.Get(context.Background(), req.NamespacedName, instance)
+	return instance, err
+}
+
 // Reconcile is the core logic of controller
 func (r *PodSetReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	_ = context.Background()
 	_ = r.Log.WithValues("podset", req.NamespacedName)
 
 	// Fetch the PodSet instance (the parent of the pods)
-	instance := &appv1alpha1.PodSet{}
-	err := r.Get(context.Background(), req.NamespacedName, instance)
+	podSet, err := r.GetPodSetInstance(req)
 	if err != nil {
 		if errors.IsNotFound(err) {
 			// Request object not found, could have been deleted after reconcile request.
@@ -65,10 +71,9 @@ func (r *PodSetReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	}
 
 	// List all pods owned by this PodSet instance
-	podSet := instance
 	podList := &corev1.PodList{}
 	labelz := map[string]string{
-		"app":     podSet.Name, // instance name?
+		"app":     podSet.Name, // the metadata.name field from user's CR PodSet YAML file
 		"version": "v0.1",
 	}
 	labelSelector := labels.SelectorFromSet(labelz)
@@ -99,6 +104,9 @@ func (r *PodSetReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 		AvailableReplicas: numAvailable,
 	}
 	if !reflect.DeepEqual(podSet.Status, status) {
+		// We need to refresh the PodSet before we can update it
+		// https://github.com/operator-framework/operator-sdk/issues/3968
+		podSet, _ = r.GetPodSetInstance(req)
 		podSet.Status = status
 		err = r.Status().Update(context.Background(), podSet)
 		if err != nil {
@@ -145,12 +153,12 @@ func (r *PodSetReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 // newPodForCR returns a busybox pod with the same name/namespace as the cr
 func newPodForCR(cr *appv1alpha1.PodSet) *corev1.Pod {
 	labels := map[string]string{
-		"app":     cr.Name, // instance name?
+		"app":     cr.Name, // the metadata.name field from user's CR PodSet YAML file
 		"version": "v0.1",
 	}
 	return &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
-			GenerateName: cr.Name + "-pod",
+			GenerateName: cr.Name + "-pod-", // Pod name example: podset-sample-pod-jzxbw
 			Namespace:    cr.Namespace,
 			Labels:       labels,
 		},
