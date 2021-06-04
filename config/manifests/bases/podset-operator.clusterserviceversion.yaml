@@ -1,0 +1,48 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: podset-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: PodSet is the Schema for the podsets API
+      displayName: Pod Set
+      kind: PodSet
+      name: podsets.app.example.com
+      version: v1alpha1
+  description: '-'
+  displayName: podset-operator
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: false
+    type: AllNamespaces
+  keywords:
+  - podset
+  - operator
+  links:
+  - name: Podset Operator
+    url: https://podset-operator.domain
+  maintainers:
+  - email: zulh@example.com
+    name: Zulh
+  maturity: alpha
+  provider:
+    name: Zulh
+  version: 0.0.0
