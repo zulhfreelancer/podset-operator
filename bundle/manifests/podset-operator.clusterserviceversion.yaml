@@ -18,10 +18,9 @@ metadata:
     capabilities: Basic Install
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v2
-  name: podset-operator.v0.0.2
+  name: podset-operator.v0.0.1
   namespace: placeholder
 spec:
-  replaces: podset-operator.v0.0.1
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
@@ -114,7 +113,7 @@ spec:
                 - --enable-leader-election
                 command:
                 - /manager
-                image: docker.io/zulhfreelancer/podset-operator:v0.0.2
+                image: docker.io/zulhfreelancer/podset-operator:v0.0.1
                 name: manager
                 resources:
                   limits:
@@ -176,4 +175,4 @@ spec:
   maturity: alpha
   provider:
     name: Zulh
-  version: 0.0.2
+  version: 0.0.1
