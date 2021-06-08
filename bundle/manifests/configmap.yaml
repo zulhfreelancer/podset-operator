@@ -4,4 +4,4 @@ metadata:
   name: example-configmap
   namespace: podset-system
 data:
-  database: mongodb
+  database: mysql

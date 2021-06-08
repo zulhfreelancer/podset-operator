@@ -1,0 +1,32 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: podset-operator
+  namespace: podset-system
+spec:
+  targetNamespaces:
+  - podset-system
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: podset-operator
+  namespace: podset-system
+spec:
+  image: docker.io/zulhfreelancer/podset-olm-index:latest
+  sourceType: grpc
+  updateStrategy:
+    registryPoll:
+      interval: 10m
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: podset-operator
+  namespace: podset-system
+spec:
+  channel: alpha
+  name: podset-operator
+  source: podset-operator
+  sourceNamespace: podset-system
+  installPlanApproval: Automatic

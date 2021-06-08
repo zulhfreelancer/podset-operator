@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: docker.io/zulhfreelancer/podset-operator
-  newTag: v0.0.2
+  newTag: v0.0.4

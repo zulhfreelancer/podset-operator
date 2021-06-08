@@ -2,7 +2,11 @@
 
 A basic k8s operator for PodSet CRD, built with Go and Operator SDK
 
-## Guide
+## OLM Integration
+
+Check-out [my OLM notes](olm-notes.md) if you want to learn how to publish/release your operator using [Operator Lifecycle Manager (OLM)](https://olm.operatorframework.io) project 
+
+## Resources
 
 - [https://learn.openshift.com/operatorframework/go-operator-podset/](https://learn.openshift.com/operatorframework/go-operator-podset/)
 - [https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/](https://sdk.operatorframework.io/docs/building-operators/golang/quickstart/)
