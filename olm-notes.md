@@ -1,6 +1,7 @@
 ## Resources
 
 * [Deploying Kubernetes Operators with Operator Lifecycle Manager bundles](https://developers.redhat.com/blog/2021/02/08/deploying-kubernetes-operators-with-operator-lifecycle-manager-bundles)
+* [Deploying Operators with OLM bundles](https://www.redhat.com/en/blog/deploying-operators-olm-bundles)
 
 ## Install operator process
 
