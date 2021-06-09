@@ -64,4 +64,4 @@ $ kubectl -n podset-system get pod -l control-plane=controller-manager -o json |
 * If you are curious what versions I was using while testing this, they are:
     * OPM [v1.17.2](https://github.com/operator-framework/operator-registry/releases/tag/v1.17.2)
     * Operator SDK [v1.4.2](https://github.com/operator-framework/operator-sdk/releases/tag/v1.4.2)
-* If your `make bundle` command fails, make sure you don't delete the original sample file(s) created by Operator SDK when you added new API(s). In my case, [this file](https://github.com/zulhfreelancer/podset-operator/blob/master/config/samples/app_v1alpha1_podset.yaml). The command will silently fail if it can't find the original sample files.
+* If your `make bundle` command fails, make sure you don't delete the original sample file(s) created by Operator SDK when you added new API(s). In my case, [this file](https://github.com/zulhfreelancer/podset-operator/blob/master/config/samples/app_v1alpha1_podset.yaml). The command will silently fail if it can't find the original sample file(s). The sample file(s) can be empty.
