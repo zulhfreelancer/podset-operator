@@ -60,5 +60,8 @@ $ kubectl -n podset-system get pod -l control-plane=controller-manager -o json |
     * the waiting period at each hop may equal to CatalogSource `.spec.updateStrategy.registryPoll.interval`
     * so, in this example, the waiting period for complete update from v0.0.1 to v0.0.4 can be 30 minutes (assuming the _interval_ above) is 10 minutes
 * When the latest operator version in index image is not the first i.e. v0.0.4 and you proceed with installation (by creating OperatorGroup, CatalogSource and Subscription), it will jump straight to v0.0.4/latest version
-* From my testing, you can add other Kubernetes manifests/YAMLs too inside the `bundle/manifests` folder and they will get applied to your cluster (see [configmap.yaml](configmap.yaml))
-* If you are curious what OPM version I was using while testing this, it's [v1.17.2](https://github.com/operator-framework/operator-registry/releases/tag/v1.17.2)
+* From my testing, you can add other Kubernetes manifests/YAMLs too inside the `bundle/manifests` folder and they will get applied to your cluster (see [configmap.yaml](configmap.yaml)). Use one file for one Kubernetes Kind. If you place multiple Kinds in one file, it won't work.
+* If you are curious what versions I was using while testing this, they are:
+    * OPM [v1.17.2](https://github.com/operator-framework/operator-registry/releases/tag/v1.17.2)
+    * Operator SDK [v1.4.2](https://github.com/operator-framework/operator-sdk/releases/tag/v1.4.2)
+* If your `make bundle` command fails, make sure you don't delete the original sample file(s) created by Operator SDK when you added new API(s). In my case, [this file](https://github.com/zulhfreelancer/podset-operator/blob/master/config/samples/app_v1alpha1_podset.yaml). The command will silently fail if it can't find the original sample files.
